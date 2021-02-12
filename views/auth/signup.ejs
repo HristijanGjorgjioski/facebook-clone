@@ -1,9 +1,12 @@
 <%- include('../includes/head.ejs') %> 
 
 </head>
+    <div>
+        <h2><%= errorMessage %> </h2>
+    </div>
     <form action="/signup" method="POST">
-        <input type="text" name="name" placeholder="name">
-        <input type="email" name="email" placeholder="email">
+        <input type="text" name="name" placeholder="name" value="<%= oldInput.name %>">
+        <input type="email" name="email" placeholder="email" value="<%= oldInput.email %>">
         <input type="password" name="password" placeholder="password">
         <button type="submit">Sign Up</button>
     </form>

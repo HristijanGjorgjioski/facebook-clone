@@ -1,8 +1,11 @@
 <%- include('../includes/head.ejs') %> 
 
 </head>
+    <div>
+        <h2><%= errorMessage %> </h2>
+    </div>
     <form action="/login" method="POST">
-        <input type="email" name="email" placeholder="email">
+        <input type="email" name="email" placeholder="email" value="<%= oldInput.email %> ">
         <input type="password" name="password" placeholder="password">
         <button type="submit" name="login">Login</button>
     </form>
