@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 const { validationResult } = require('express-validator');
+const sendgrid = require('@sendgrid/mail');
 
 const User = require('../models/users');
 
@@ -75,13 +76,74 @@ exports.postLogin = (req, res, next) => {
     })
   }
 
-  return User.findOne({ email })
+  User.findOne({ email })
     .then(user => {
-      bcrypt
-        .compare(password, user.password)
-        .then(result => {
-          console.log("User logged in!");
-          res.redirect('/');
+      if(!user) {
+        return res.status(422).render('auth/login', {
+          pageTitle: 'Login',
+          errorMessage: errors.array()[0].msg,
+          oldInput: {
+            email: email,
+            password: ''
+          }
         })
+      }
+      bcrypt
+    .compare(password, user.password)
+    .then(doMatch => {
+      if(doMatch) {
+        req.session.isLoggedIn = true;
+        req.session.user = user;
+        return req.session.save(err => {
+          console.log(err);
+          res.redirect('/');
+        });
+      }
+      return res.status(422).render('auth/login', {
+        pageTitle: 'Login',
+        errorMessage: errors.array()[0].msg,
+        oldInput: {
+          email: email,
+          password: ''
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res.redirect('/login');
+      })
     })
+    })
+    .catch(err => {
+      console.log(err);
+    })    
+}
+
+exports.getResetPassword = (req, res, next) => {
+  res.render('auth/reset-password', {
+    pageTitle: 'Password reset',
+    errorMessage: []
+  })
+}
+
+exports.postResetPassword = (req, res, next) => {
+  userEmail = req.body.email;
+  sendgrid.setApiKey('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');
+  const message = {
+    from: 'hristijangorgioski501@gmail.com',
+    to: userEmail,
+    subject: 'Password reset',
+    html: `
+      <h2>You requested a password reset. Click <a href="http://localhost:3000/reset">HERE</a></h2>
+      <h2>and change your password. We hope you enjoy our app!</h2>
+    `
+  }
+  sendgrid.send(message);
+  res.redirect('/');
+}
+
+exports.getReset = (req, res, next) => {
+  res.render('auth/reset', {
+    pageTitle: 'Reset',
+    errorMessage: []
+  })
 }

@@ -23,7 +23,8 @@ router.post(
       .trim()
       .withMessage("Password must have 6 characters")
   ],
-  authController.postSignup);
+  authController.postSignup
+);
 
 router.get('/login', authController.getLogin);
 
@@ -39,6 +40,13 @@ router.post(
       .trim()
       .withMessage("Wrong email or password")
   ], 
-  authController.postLogin);
+  authController.postLogin
+);
+
+router.get('/reset-password', authController.getResetPassword);
+
+router.post('/reset-password', authController.postResetPassword);
+
+router.get('/reset', authController.getReset);
 
 module.exports = router;
