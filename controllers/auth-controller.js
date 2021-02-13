@@ -12,7 +12,8 @@ exports.getSignup = (req, res, next) => {
     oldInput: {
       name: '',
       email: ''
-    }
+    },
+    csrfToken: req.csrfToken()
   });
 }
 

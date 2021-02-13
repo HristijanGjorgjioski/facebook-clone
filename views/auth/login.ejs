@@ -7,7 +7,7 @@
     <form action="/login" method="POST">
         <input type="email" name="email" placeholder="email" value="<%= oldInput.email %> ">
         <input type="password" name="password" placeholder="password">
-        <input type="hidden" name="_csrf" id="" value="<%= csrfToken %> ">
+        <input type="hidden" name="_csrf" id="" value="<%= csrfToken %>">
         <button type="submit" name="login">Login</button>
     </form>
 </body>
