@@ -1,0 +1,16 @@
+<%- include('../includes/head.ejs') %> 
+
+</head>
+    <div>
+        <h2><%= errorMessage %> </h2>
+    </div>
+    <form action="/new-data" method="POST">
+        <input type="email" name="email" placeholder="Email" value="<%= oldInput.email %>">
+        <input type="text" name="name" placeholder="Name" value="<%= oldInput.name %>">
+        <input type="hidden" name="userId" value="<%= userId %>">
+        <input type="hidden" name="passwordToken" value="<%= dataToken %>">
+        <input type="hidden" name="_csrf" id="" value="<%= csrfToken %>">
+        <button type="submit" name="change-data">Update data</button>
+    </form>
+</body>
+</html>

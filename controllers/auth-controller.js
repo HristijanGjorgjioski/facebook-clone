@@ -5,6 +5,7 @@ const { validationResult } = require('express-validator');
 const sendgrid = require('@sendgrid/mail');
 
 const User = require('../models/users');
+const { name } = require('ejs');
 
 exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
@@ -120,6 +121,8 @@ exports.postLogin = (req, res, next) => {
     })    
 }
 
+///////////////////////////////
+
 exports.getResetPassword = (req, res, next) => {
   res.render('auth/reset-password', {
     pageTitle: 'Password reset',
@@ -152,7 +155,7 @@ exports.postResetPassword = (req, res, next) => {
           to: req.body.email,
           subject: 'Password reset',
           html: `
-            <h2>You requested a password reset. Click <a href="http://localhost:3000/reset/${token}">HERE</a></h2>
+            <h2>You requested a password reset. Click <a href="http://localhost:3000/reset-password/${token}">HERE</a></h2>
             <h2>and change your password. We hope you enjoy our app!</h2>
           `
         });
@@ -195,6 +198,98 @@ exports.postNewPassword = (req, res, next) => {
     })
     .then(hashedPassword => {
       resetUser.password = hashedPassword;
+      resetUser.resetToken = undefined;
+      resetUser.resetTokenExpiration = undefined;
+      return resetUser.save();
+    })
+    .then(result => {
+      res.redirect('/login');
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+/////////////////////////////////////////////////
+
+exports.getChangeData = (req, res, next) => {
+  res.render('auth/change-data', {
+    pageTitle: 'Change your data',
+    errorMessage: []
+  })
+}
+
+exports.postChangeData = (req, res, next) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err);
+      return res.redirect('/reset');
+    }
+    const token = buffer.toString('hex');
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if (!user) {
+          req.flash('error', 'No account with that email found.');
+          return res.redirect('/change-data');
+        }
+        user.resetToken = token;
+        user.resetTokenExpiration = Date.now() + 3600000;
+        return user.save();
+      })
+      .then(result => {
+        res.redirect('/');
+        sendgrid.setApiKey('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');
+        sendgrid.send({
+          from: 'hristijangorgioski501@gmail.com',
+          to: req.body.email,
+          subject: 'Change your data',
+          html: `
+            <h2>You requested to change your data. Click <a href="http://localhost:3000/change-data/${token}">HERE</a></h2>
+            <h2>and change your password. We hope you enjoy our app!</h2>
+          `
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+}
+
+exports.getNewData = (req, res, next) => {
+  const token = req.params.token;
+  User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+    .then(user => {
+      res.render('auth/new-data', {
+        pageTitle: 'Change your data',
+        errorMessage: [],
+        userId: user._id.toString(),
+        oldInput: {
+          email: user.email,
+          name: user.name
+        },
+        dataToken: token
+      });
+    }).catch(err => {
+      console.log(err);
+    })
+}
+
+exports.postNewData = (req, res, next) => {
+  const newEmail = req.body.email;
+  const newName = req.body.name;
+  const userId = req.body.userId;
+  const dataToken = req.body.passwordToken;
+  let resetUser;
+
+  User.findOne({
+    resetToken: dataToken,
+    resetTokenExpiration: { $gt: Date.now() },
+    _id: userId
+  })
+    .then(user => {
+      resetUser = user;
+      resetUser.email = newEmail;
+      resetUser.name = newName;
       resetUser.resetToken = undefined;
       resetUser.resetTokenExpiration = undefined;
       return resetUser.save();

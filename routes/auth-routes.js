@@ -43,12 +43,24 @@ router.post(
   authController.postLogin
 );
 
+/////////////////////////
+
 router.get('/reset-password', authController.getResetPassword);
 
 router.post('/reset-password', authController.postResetPassword);
 
-router.get('/reset/:token', authController.getNewPassword);
+router.get('/reset-password/:token', authController.getNewPassword);
 
 router.post('/reset', authController.postNewPassword);
+
+/////////////////////////
+
+router.get('/change-data', authController.getChangeData);
+
+router.post('/change-data', authController.postChangeData);
+
+router.get('/change-data/:token', authController.getNewData);
+
+router.post('/new-data', authController.postNewData);
 
 module.exports = router;
