@@ -35,10 +35,9 @@ router.post(
       .isEmail()
       .normalizeEmail()
       .withMessage("Wrong email or password"),
-    body('password')
+    body('password', 'Wrong email or password')
       .isLength({ min: 6 })
       .trim()
-      .withMessage("Wrong email or password")
   ], 
   authController.postLogin
 );
@@ -49,9 +48,17 @@ router.get('/reset-password', authController.getResetPassword);
 
 router.post('/reset-password', authController.postResetPassword);
 
-router.get('/reset-password/:token', authController.getNewPassword);
+router.get('/new-password/:token', authController.getNewPassword);
 
-router.post('/reset', authController.postNewPassword);
+router.post(
+  '/new-password',
+  [
+    body('password', 'Password must have 6 characters')
+      .isLength({ min: 6 })
+      .trim()
+  ], 
+  authController.postNewPassword
+);
 
 /////////////////////////
 

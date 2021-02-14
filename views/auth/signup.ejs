@@ -1,29 +1,30 @@
 <%- include('../includes/head.ejs') %> 
 
 </head>
-    <div>
-        <h2><%= errorMessage %> </h2>
-    </div>
     <div class="container h-100">
         <div class="row justify-content-center align-items-center h-100 text-center">
-            <div class="col-10 col-md-8 col-lg-6">
-                    <form action="/signup" method="POST">
+            <div class="col-10 col-md-8 col-lg-4">
+                <div class="alert alert-danger mt-4" role="alert">
+                    <p class="p-1 mt-2"><%= errorMessage %></p>
+                </div>
+                <form action="/signup" method="POST">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input class="form-control text-center" type="text" name="name" id="name" placeholder="Name" value="<%= oldInput.name %>">
+                        <input class="form-control text-center" type="text" name="name" id="name" value="<%= oldInput.name %>">
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <input class="form-control text-center" type="email" name="email" placeholder="Email" value="<%= oldInput.email %>">
+                        <input class="form-control text-center" type="email" name="email" value="<%= oldInput.email %>">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input class="form-control text-center" type="password" name="password" id="password" placeholder="Password">
+                        <input class="form-control text-center" type="password" name="password" id="password">
                     </div>
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <button class="btn btn-lg btn-primary text-center" type="submit">Sign Up</button>
+                    <button class="btn btn-md btn-primary text-center" type="submit">Sign Up</button>
+                    <p>Already have an account? Login<a href="/login"> HERE</a></p>
                 </form>
-                </div>
             </div>
         </div>
+    </div>
     <%- include('../includes/end.ejs') %>

@@ -5,12 +5,11 @@ const { validationResult } = require('express-validator');
 const sendgrid = require('@sendgrid/mail');
 
 const User = require('../models/users');
-const { name } = require('ejs');
 
 exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
     pageTitle: 'Signup',
-    errorMessage: [],
+    errorMessage: null,
     oldInput: {
       name: '',
       email: ''
@@ -55,7 +54,7 @@ exports.getLogin = (req, res, next) => {
   email = req.body.email;
   res.render('auth/login', {
     pageTitle: 'Login',
-    errorMessage: [],
+    errorMessage: null,
     oldInput: {
       email: '',
       password: ''
@@ -126,7 +125,7 @@ exports.postLogin = (req, res, next) => {
 exports.getResetPassword = (req, res, next) => {
   res.render('auth/reset-password', {
     pageTitle: 'Password reset',
-    errorMessage: []
+    errorMessage: null
   })
 }
 
@@ -141,7 +140,7 @@ exports.postResetPassword = (req, res, next) => {
       .then(user => {
         if (!user) {
           req.flash('error', 'No account with that email found.');
-          return res.redirect('/reset');
+          return res.redirect('/reset-password');
         }
         user.resetToken = token;
         user.resetTokenExpiration = Date.now() + 3600000;
@@ -155,7 +154,7 @@ exports.postResetPassword = (req, res, next) => {
           to: req.body.email,
           subject: 'Password reset',
           html: `
-            <h2>You requested a password reset. Click <a href="http://localhost:3000/reset-password/${token}">HERE</a></h2>
+            <h2>You requested a password reset. Click <a href="http://localhost:3000/new-password/${token}">HERE</a></h2>
             <h2>and change your password. We hope you enjoy our app!</h2>
           `
         });
@@ -172,7 +171,7 @@ exports.getNewPassword = (req, res, next) => {
     .then(user => {
       res.render('auth/new-password', {
         pageTitle: 'Set new password',
-        errorMessage: [],
+        errorMessage: null,
         userId: user._id.toString(),
         passwordToken: token
       });
@@ -182,17 +181,28 @@ exports.getNewPassword = (req, res, next) => {
 }
 
 exports.postNewPassword = (req, res, next) => {
+  const token = req.params.token;
   const newPassword = req.body.password;
   const userId = req.body.userId;
   const passwordToken = req.body.passwordToken;
   let resetUser;
 
+  const errors = validationResult(req);
+
   User.findOne({
     resetToken: passwordToken,
-    resetTokenExpiration: { $gt: Date.now() },
+    resetTokenExpiration: { $gt: Date.now() + 1500000 },
     _id: userId
   })
     .then(user => {
+      if(newPassword.length < 6 ) {
+        return res.render('auth/new-password', {
+          pageTitle: 'Set new password',
+          errorMessage: errors.array()[0].msg,
+          userId: user._id.toString(),
+          passwordToken: token
+        });
+      }
       resetUser = user;
       return bcrypt.hash(newPassword, 12);
     })
@@ -261,7 +271,7 @@ exports.getNewData = (req, res, next) => {
     .then(user => {
       res.render('auth/new-data', {
         pageTitle: 'Change your data',
-        errorMessage: [],
+        errorMessage: null,
         userId: user._id.toString(),
         oldInput: {
           email: user.email,
