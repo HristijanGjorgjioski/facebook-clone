@@ -77,7 +77,7 @@
       justify-content: center;
       align-items: center;
       font-size: 1rem;
-      color: #444;
+      color: rgb(204, 93, 93);
       background: rgba(0, 0, 0, 0.068);
       border: none;
       outline: none;
@@ -91,7 +91,7 @@
   nav ul li:hover #tv, 
   nav ul li:hover #friend{
       background: rgba(0, 0, 0, 0.138);
-      color: #444;
+      color: rgb(206, 94, 94);
       border-radius: 5px;
  
   } 

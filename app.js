@@ -23,6 +23,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const authRoutes = require('./routes/auth-routes');
+const feedRoutes = require('./routes/feed-router');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -59,6 +60,7 @@ app.use((req, res, next) => {
 })
 
 app.use(authRoutes);
+app.use(feedRoutes);
 
 mongoose.connect(
   MONGO_URI, 
