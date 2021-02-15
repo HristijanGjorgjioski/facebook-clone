@@ -187,22 +187,12 @@ exports.postNewPassword = (req, res, next) => {
   const passwordToken = req.body.passwordToken;
   let resetUser;
 
-  const errors = validationResult(req);
-
   User.findOne({
     resetToken: passwordToken,
-    resetTokenExpiration: { $gt: Date.now() + 1500000 },
+    resetTokenExpiration: { $gt: Date.now() },
     _id: userId
   })
     .then(user => {
-      if(newPassword.length < 6 ) {
-        return res.render('auth/new-password', {
-          pageTitle: 'Set new password',
-          errorMessage: errors.array()[0].msg,
-          userId: user._id.toString(),
-          passwordToken: token
-        });
-      }
       resetUser = user;
       return bcrypt.hash(newPassword, 12);
     })
@@ -216,6 +206,7 @@ exports.postNewPassword = (req, res, next) => {
       res.redirect('/login');
     })
     .catch(err => {
+      res.redirect(`http://localhost:3000/new-password/${token}`);
       console.log(err);
     });
 }
@@ -225,7 +216,7 @@ exports.postNewPassword = (req, res, next) => {
 exports.getChangeData = (req, res, next) => {
   res.render('auth/change-data', {
     pageTitle: 'Change your data',
-    errorMessage: []
+    errorMessage: null
   })
 }
 
