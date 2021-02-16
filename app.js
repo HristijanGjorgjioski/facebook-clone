@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -22,11 +23,11 @@ const store = new MongoDBStore({
 const csrfProtection = csrf();
 
 const fileStorage = multer.diskStorage({
-  destination: (req, res, next) => {
+  destination: (req, file, cb) => {
     cb(null, 'images')
   },
-  filename: (req, res, next) => {
-    cb(null, uuidv4() + '-' + file.originalName);
+  filename: (req, file, cb) => {
+    cb(null, uuidv4() + '-' + file.originalname);
   }
 })
 
@@ -42,7 +43,6 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const authRoutes = require('./routes/auth-routes');
-const feedRoutes = require('./routes/feed-routes');
 const postRoutes = require('./routes/post-routes');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -85,7 +85,6 @@ app.use((req, res, next) => {
 })
 
 app.use(authRoutes);
-app.use(feedRoutes);
 app.use(postRoutes);
 
 mongoose.connect(

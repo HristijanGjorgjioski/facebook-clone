@@ -1,35 +1,15 @@
-<!-- <form action="/add-post" method="POST" enctype="multipart/form-data">
-    <div class="container">
-        <div class="row">
-            
-            <div class="col-md-8 col-md-offset-2">
-                
-                <h1>Create post</h1> -->
-                
-                <form class="w-100" action="/add-post" enctype="multipart/form-data" method="POST">
-                    
-                    <div class="form-group">
-                        <input type="file" name="photo" id="photo">
-                    </div>
-                    
-                    <!-- <div class="form-group">
-                        <label for="title">Title <span class="require">*</span></label>
-                        <input type="text" class="form-control" name="title" />
-                    </div> -->
-                    
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea rows="5" class="form-control" name="description" ></textarea>
-                    </div>
-                    
-                    <div class="form-group float-right">
-                        <button type="submit" class="btn btn-primary float-right">
-                            Add Post
-                        </button>
-                    </div>
-                    
-                </form>
-            <!-- </div>
-        </div>
+<form class="w-100" action="/add-post" enctype="multipart/form-data" method="POST">
+    <div class="form-group">
+        <input type="file" name="image" id="image">
     </div>
-</form> -->
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea rows="5" class="form-control" name="description" ></textarea>
+    </div>
+    <div class="form-group float-right">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="btn btn-primary float-right">
+            Add Post
+        </button>
+    </div>
+</form>

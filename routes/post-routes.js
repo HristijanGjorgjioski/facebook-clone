@@ -5,6 +5,10 @@ const router = express.Router();
 
 const postController = require('../controllers/post-controller');
 
-// router.get('/', feedController.getWall);
+router.get('/', postController.getPosts);
+
+router.get('/', postController.getAddPost);
+
+router.post('/add-post', postController.postAddPost);
 
 module.exports = router;
