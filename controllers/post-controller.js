@@ -77,4 +77,7 @@ exports.getOnePost = (req, res, next) => {
         post: post
       })
     })
+    .catch(err => {
+      console.log(err);
+    })
 }

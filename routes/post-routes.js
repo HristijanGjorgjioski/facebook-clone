@@ -13,4 +13,6 @@ router.post('/add-post', postController.postAddPost);
 
 router.get('/:postId', postController.getOnePost);
 
+router.post('/add-comment', postController.postAddComment);
+
 module.exports = router;
