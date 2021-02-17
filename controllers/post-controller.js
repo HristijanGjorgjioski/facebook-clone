@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { validationResult } = require('express-validator');
 
 const Post = require('../models/posts');
+const Comment = require('../models/comments');
 
 ////////////////////////////////////////
 
@@ -70,12 +71,38 @@ exports.postAddPost = (req, res, next) => {
 
 exports.getOnePost = (req, res, next) => {
   const postId = req.params.postId;
+
   return Post.findById(postId)
     .then(post => {
       res.render('feed/post-detail', {
         pageTitle: 'Feed',
         post: post
       })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
+
+///////////////////////////////////////
+
+exports.postAddComment = (req, res, next) => {
+  const postId = req.params.postId;
+  const commentBody = req.body.comment;
+
+  const comment = new Comment({
+    description: commentBody,
+    postId: postId,
+    user: {
+      name: req.user.name,
+      userId: req.user
+    }
+  })
+  comment
+    .save()
+    .then(comm => {
+      console.log('Comment added!')
     })
     .catch(err => {
       console.log(err);
