@@ -17,19 +17,38 @@
                             </div>
                         </div>
                         <div class="p-2 px-3"><span><%= post.description %></span></div>
-                        <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="<%= post.imageUrl %>"></div>
+                        <% if(post.imageUrl) { %> 
+                            <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="/<%= post.imageUrl %>"></div>
+                        <% } else { %>
+                            <div></div>
+                        <% } %>  
                         <div class="d-flex justify-content-end socials p-2 py-3"><i class="fa fa-thumbs-up"></i><i class="fa fa-comments-o"></i><i class="fa fa-share"></i></div>
                         <input type="hidden" name="postId" <%= post._id %> >
                         <%- include("./add-comment.ejs") %> 
                     </div>
-                    
+
                     <% if(comment.length > 0) { %>
-                        <% for(let comm of comment) { %> 
-                            <h1><%= comm.user.userId  %> </h1>
-                            <h1><%= comm.user.name  %> </h1>
-                            <h1><%= comm.description  %> </h1>
+                        <div class="headings d-flex justify-content-between align-items-center mb-3 mt-3">
+                            <h5>Comments(<%= comment.length %>)</h5>
+                        </div>
+                        <% for(let comm of comment) { %>
+                            <div class="bg-white border mt-2">
+                                <div>
+                                    <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                                        <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" width="45">
+                                            <div class="d-flex flex-column flex-wrap ml-2">
+                                                <span class="font-weight-bold"><%= comm.user.name %></span>
+                                                <span class="text-black-50 time"><%= comm.createdAt %></span>
+                                            </div>
+                                        </div>
+                                        <div class="feed-icon px-2"><i class="fa fa-ellipsis-v text-black-50"></i></div>
+                                    </div>
+                                </div>
+                                <div class="p-2 px-3"><span><%= comm.description %></span></div>
+                            </div>
                         <% } %> 
                     <% } %> 
+                    
                 </div>
             </div>
         </div>

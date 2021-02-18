@@ -33,10 +33,10 @@ exports.postAddPost = (req, res, next) => {
   const image = req.file;
   const description = req.body.description;
   if(image == undefined) {
-    const imageUrl = null;
+    // const imageUrl = null;
     const post = new Post({
       description,
-      imageUrl,
+      // imageUrl,
       user: {
         name: req.user.name,
         userId: req.user
@@ -81,7 +81,6 @@ exports.getOnePost = (req, res, next) => {
             postId: postId,
             comment: comment
           })
-          console.log(comment);
         })
     })
     .catch(err => {
@@ -107,7 +106,7 @@ exports.postAddComment = (req, res, next) => {
     .save()
     .then(comm => {
       console.log('Comment added!')
-      res.redirect('/');
+      res.redirect(`/post/${postId}`);
     })
     .catch(err => {
       console.log(err);

@@ -24,8 +24,12 @@
                                     </div>
                                 </div>
                                 <div class="p-2 px-3"><span><%= post.description %></span></div>
-                                <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="<%= post.imageUrl %>"></div>
-                                <a href="/<%= post._id %> "><p>See post details</p></a>
+                                <% if(post.imageUrl) { %> 
+                                    <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="/<%= post.imageUrl %>"></div>
+                                <% } else { %>
+                                    <div></div>
+                                <% } %> 
+                                <a href="/post/<%= post._id %>"><p>See post details</p></a>
                                 <div class="d-flex justify-content-end socials p-2 py-3"><i class="fa fa-thumbs-up"></i><i class="fa fa-comments-o"></i><i class="fa fa-share"></i></div>
                             </div>
                         <% } %> 
