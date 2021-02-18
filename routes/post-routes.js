@@ -11,12 +11,10 @@ router.get('/', postController.getAddPost);
 
 router.post('/add-post', postController.postAddPost);
 
-router.get('/:postId', postController.getOnePost);
+router.get('/post/:postId', postController.getOnePost);
 
 router.get('/add-comment/:postId', postController.getOnePost);
 
-router.post('/add-comment/', postController.postAddComment);
-
-router.get('/comments', postController.getCommentsById);
+router.post('/add-comment', postController.postAddComment);
 
 module.exports = router;

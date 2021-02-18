@@ -23,8 +23,13 @@
                         <%- include("./add-comment.ejs") %> 
                     </div>
                     
-                    <%- include("./comments.ejs") %> 
-                
+                    <% if(comment.length > 0) { %>
+                        <% for(let comm of comment) { %> 
+                            <h1><%= comm.user.userId  %> </h1>
+                            <h1><%= comm.user.name  %> </h1>
+                            <h1><%= comm.description  %> </h1>
+                        <% } %> 
+                    <% } %> 
                 </div>
             </div>
         </div>

@@ -72,16 +72,21 @@ exports.getOnePost = (req, res, next) => {
 
   Post.findById(postId)
     .then(post => {
-      res.render('feed/post-detail', {
-        pageTitle: 'Feed',
-        post: post,
-        postId: postId,
-        comments: comment
-      })
+      Comment.find({ 'postId': postId })
+        .exec()
+        .then(comment => {
+          res.render('feed/post-detail', {
+            pageTitle: 'Feed',
+            post: post,
+            postId: postId,
+            comment: comment
+          })
+          console.log(comment);
+        })
     })
-  .catch(err => {
-    console.log(err);
-  });
+    .catch(err => {
+      console.log(err);
+    });
 }
 
 ////////////////////////////////////////
@@ -103,19 +108,6 @@ exports.postAddComment = (req, res, next) => {
     .then(comm => {
       console.log('Comment added!')
       res.redirect('/');
-    })
-    .catch(err => {
-      console.log(err);
-    })
-}
-
-exports.getCommentsById = (req, res, next) => {
-  return Comment.find()
-    .then(comments => {
-      res.render('feed/comments', {
-        pageTitle: 'Comments',
-        comments
-      })
     })
     .catch(err => {
       console.log(err);
