@@ -4,6 +4,7 @@
         <textarea name="comment" class="form-control ml-1 shadow-none textarea border border-dark" placeholder="Your comment here!"></textarea>
     </div>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <input type="hidden" name="postId" value="<%= postId %>">
     <div class="mt-2 text-right">
         <button class="btn btn-primary btn-sm shadow-none" type="submit">Post comment</button>
     </div>

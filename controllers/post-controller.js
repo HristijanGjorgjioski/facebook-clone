@@ -67,28 +67,27 @@ exports.postAddPost = (req, res, next) => {
   }
 }
 
-////////////////////////////////////////
-
 exports.getOnePost = (req, res, next) => {
   const postId = req.params.postId;
 
-  return Post.findById(postId)
+  Post.findById(postId)
     .then(post => {
       res.render('feed/post-detail', {
         pageTitle: 'Feed',
-        post: post
+        post: post,
+        postId: postId,
+        comments: comment
       })
     })
-    .catch(err => {
-      console.log(err);
-    })
+  .catch(err => {
+    console.log(err);
+  });
 }
 
-
-///////////////////////////////////////
+////////////////////////////////////////
 
 exports.postAddComment = (req, res, next) => {
-  const postId = req.params.postId;
+  const postId = req.body.postId;
   const commentBody = req.body.comment;
 
   const comment = new Comment({
@@ -103,8 +102,25 @@ exports.postAddComment = (req, res, next) => {
     .save()
     .then(comm => {
       console.log('Comment added!')
+      res.redirect('/');
     })
     .catch(err => {
       console.log(err);
     })
 }
+
+exports.getCommentsById = (req, res, next) => {
+  return Comment.find()
+    .then(comments => {
+      res.render('feed/comments', {
+        pageTitle: 'Comments',
+        comments
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
+///////////////////////////////////////
+

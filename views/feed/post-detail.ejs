@@ -19,11 +19,11 @@
                         <div class="p-2 px-3"><span><%= post.description %></span></div>
                         <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="<%= post.imageUrl %>"></div>
                         <div class="d-flex justify-content-end socials p-2 py-3"><i class="fa fa-thumbs-up"></i><i class="fa fa-comments-o"></i><i class="fa fa-share"></i></div>
-                        
+                        <input type="hidden" name="postId" <%= post._id %> >
                         <%- include("./add-comment.ejs") %> 
-
                     </div>
-
+                    
+                    <%- include("./comments.ejs") %> 
                 
                 </div>
             </div>
