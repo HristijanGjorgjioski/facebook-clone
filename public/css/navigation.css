@@ -137,10 +137,10 @@
       }
       nav ul{
           min-width: 600px;
-          padding: 8px 12px;
+          padding: 8px 1px;
         justify-content: space-between;
       }
       :root{
-          --btn-width-100: 60px;
+          --btn-width-100: 20px;
       }
   }

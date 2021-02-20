@@ -70,4 +70,8 @@ router.get('/change-data/:token', authController.getNewData);
 
 router.post('/new-data', authController.postNewData);
 
+/////////////////////////////
+
+router.get('/edit-profile', authController.getEditProfile);
+
 module.exports = router;

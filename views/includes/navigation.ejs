@@ -1,26 +1,41 @@
-<link rel="stylesheet" href="/css/navigation.css">
+<!-- <link rel="stylesheet" href="/css/navigation.css"> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/js/all.min.js" integrity="sha512-UwcC/iaz5ziHX7V6LjSKaXgCuRRqbTp1QHpbOJ4l1nw2/boCfZ2KlFIqBUA/uRVF0onbREnY9do8rM/uT/ilqw==" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li> <a href="#" id="fb"> <i class="fab fa-facebook-f    "></i> </a> </li>
-                <li> <button id="search_btn" class="" data-tooltip="Search"> <i class="fas fa-search    "></i> </button> </li>
-                
-                <li id="space2"></li>
-                
-                <li> <a class="active" data-tooltip="Home" href="#" id="home"> <i class="fas fa-home    "></i> </a> </li>
-                <li> <a class="" data-tooltip="Group" href="#" id="group"> <i class="fas fa-user"></i> </a></li>
-                <!-- <li> <a class="" data-tooltip="Watch" href="#" id="tv"> <i class="fas fa-tv    "></i> </a> </li> -->
-                <!-- <li> <a class="" data-tooltip="Friend" href="#" id="friend"> <i class="fas fa-user-alt    "></i> </a> </li> -->
-                <li id="space2"></li>
-                <!-- <li> <button class="" data-tooltip="Add" id="btn_plus"><i class="fas fa-plus    "></i></button> </li> -->
-                <li> <button class="" data-tooltip="Message" id="btn_msg"><i class="fab fa-facebook-messenger    "></i></button></li>
-                <li> <button class="" data-tooltip="Notification" id="btn_bell"> <i class="fas fa-bell    "></i></button></li>
-                <li>  <button class="" data-tooltip="Profile" id="btn_profile"><i class="fas fa-user-cog    "></i></button>  </li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between mt-0">
+            <a class="navbar-brand" href="/"><i class="fab fa-facebook-f"></i></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="/"><i class="fas fa-home"></i></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/profil"><i class="fas fa-user"></i></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/messages"><i class="fab fa-facebook-messenger"></i></a>
+                </li>
+                <li class="nav-item dropdown mr-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-cog"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/edit-profile"><h6>Edit profil</h6></a>
+                        <a class="dropdown-item" href="/reset-password"><h6>Edit password</h6></a>
+                        <a class="dropdown-item" href="/change-data"><h6>Edit e-mail and name</h6></a>
+                    </div>
+                </li>
+              </ul>
+            </div>
         </nav>
     </header>

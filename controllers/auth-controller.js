@@ -302,3 +302,12 @@ exports.postNewData = (req, res, next) => {
       console.log(err);
     });
 }
+
+///////////////////////////////////////////
+
+exports.getEditProfile = (req, res, next) => {
+  res.render('auth/edit-profile', {
+    pageTitle: 'Edit profile'
+  })
+}
+
