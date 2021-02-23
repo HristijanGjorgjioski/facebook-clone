@@ -6,7 +6,7 @@ exports.getAllPosts = (req, res, next) => {
     .then(posts => {
       res.render('admin/all-posts', {
         pageTitle: 'All your posts',
-        userId: userId,
+        userId: req.user,
         posts: posts
       })
     })

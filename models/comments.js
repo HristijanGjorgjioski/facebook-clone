@@ -10,6 +10,9 @@ const postSchema = new Schema({
       type: String,
       required: true
     },
+    profilePhoto: {
+      type: String
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',

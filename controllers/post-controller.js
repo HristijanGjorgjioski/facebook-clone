@@ -36,6 +36,7 @@ exports.postAddPost = (req, res, next) => {
       // imageUrl,
       user: {
         name: req.user.name,
+        profilePhoto: req.user.profilePhoto,
         userId: req.user
       } 
     });
@@ -52,6 +53,7 @@ exports.postAddPost = (req, res, next) => {
       imageUrl,
       user: {
         name: req.user.name,
+        profilePhoto: req.user.profilePhoto,
         userId: req.user
       } 
     });
@@ -97,6 +99,7 @@ exports.postAddComment = (req, res, next) => {
     postId: postId,
     user: {
       name: req.user.name,
+      profilePhoto: req.user.profilePhoto,
       userId: req.user
     }
   })
