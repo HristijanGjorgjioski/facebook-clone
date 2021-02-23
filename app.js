@@ -42,6 +42,7 @@ const fileFilter = (req, file, cb) => {
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+const adminRoutes = require('./routes/admin-routes');
 const authRoutes = require('./routes/auth-routes');
 const postRoutes = require('./routes/post-routes');
 
@@ -84,6 +85,7 @@ app.use((req, res, next) => {
     })
 })
 
+app.use(adminRoutes);
 app.use(authRoutes);
 app.use(postRoutes);
 

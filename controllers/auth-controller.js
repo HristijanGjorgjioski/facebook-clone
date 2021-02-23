@@ -333,21 +333,6 @@ exports.postEditProfile = (req, res, next) => {
     })
     .catch(err => {
       console.log(err);
-    })
-
-  // const updatedUser = new User({
-  //   name: user.name,
-  //   profilePhoto: profilePhoto,
-  //   email: user.email,
-  //   password: user.password
-  // })
-  // updatedUser.save()
-  //   .then(photo => {
-  //     console.log('Profile photo added!');
-  //     res.redirect('/');
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   })
+    });
 }
 
