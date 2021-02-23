@@ -14,3 +14,22 @@ exports.getAllPosts = (req, res, next) => {
       console.log(err);
     })
 }
+
+exports.getDeletePost = (req, res, next) => {
+  const postId = req.params.postId;
+  res.render('admin/all-posts', {
+    pageTitle: 'All your posts'
+  })
+}
+
+exports.postDeletePost = (req, res, next) => {
+  const postId = req.params.postId;
+  Post.findById(postId)
+    .then(post => {
+      return Post.deleteOne({ _id: postId, 'user.userId': req.user._id })
+    })
+    .then(() => {
+      console.log('Product deleted!');
+      res.redirect(`/all-posts/${req.user._id}`);
+    })
+}
