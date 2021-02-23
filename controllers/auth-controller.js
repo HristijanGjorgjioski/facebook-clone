@@ -1,3 +1,5 @@
+const path = require('path');
+
 const crypto = require('crypto');
 
 const bcrypt = require('bcryptjs');
@@ -306,8 +308,46 @@ exports.postNewData = (req, res, next) => {
 ///////////////////////////////////////////
 
 exports.getEditProfile = (req, res, next) => {
+  const userId = req.user;
   res.render('auth/edit-profile', {
-    pageTitle: 'Edit profile'
+    pageTitle: 'Edit profile',
+    userId: req.user
   })
+}
+
+exports.postEditProfile = (req, res, next) => {
+  const user = req.user;
+  const photo = req.file;
+  const profilePhoto = photo.path;
+  if(!profilePhoto) {
+    res.redirect(`edit-profile/${user._id}`)
+  }
+
+  const update = { profilePhoto: profilePhoto }
+
+  User
+    .findOneAndUpdate({ '_id': user._id }, update)
+    .then(updatedUser => {
+      console.log('Profile photo added!');
+      res.redirect('/');
+    })
+    .catch(err => {
+      console.log(err);
+    })
+
+  // const updatedUser = new User({
+  //   name: user.name,
+  //   profilePhoto: profilePhoto,
+  //   email: user.email,
+  //   password: user.password
+  // })
+  // updatedUser.save()
+  //   .then(photo => {
+  //     console.log('Profile photo added!');
+  //     res.redirect('/');
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   })
 }
 

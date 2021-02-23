@@ -72,6 +72,8 @@ router.post('/new-data', authController.postNewData);
 
 /////////////////////////////
 
-router.get('/edit-profile', authController.getEditProfile);
+router.get('/edit-profile/:userId', authController.getEditProfile);
+
+router.post('/edit-profile', authController.postEditProfile);
 
 module.exports = router;

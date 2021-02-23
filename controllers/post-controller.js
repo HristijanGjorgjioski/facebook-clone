@@ -13,7 +13,8 @@ exports.getPosts = (req, res, next) => {
       // console.log(posts);
       res.render('feed/wall', {
         pageTitle: 'Feed',
-        posts: posts
+        posts: posts,
+        userId: req.user
       })
     })
     .catch(err => {
@@ -79,7 +80,8 @@ exports.getOnePost = (req, res, next) => {
             pageTitle: 'Feed',
             post: post,
             postId: postId,
-            comment: comment
+            comment: comment,
+            userId: req.user
           })
         })
     })

@@ -89,7 +89,7 @@ app.use(postRoutes);
 
 mongoose.connect(
   MONGO_URI, 
-  {useNewUrlParser: true, useUnifiedTopology: true}
+  {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}
 )
 .then(result => {
   app.listen(3000, () => {

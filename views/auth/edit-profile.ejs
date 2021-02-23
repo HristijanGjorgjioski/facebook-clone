@@ -24,6 +24,8 @@
                             <a href="/change-data">Change your e-mail or username</a>
                         </div>
                     </div>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="postId" value="<%= userId %>">
                     <div class="panel panel-default mt-4">
                         <div class="panel-body text-center">
                             <button class="btn btn-md btn-primary" type="submit">Submit</button>

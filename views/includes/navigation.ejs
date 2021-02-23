@@ -25,12 +25,14 @@
                 <li class="nav-item">
                   <a class="nav-link" href="/messages"><i class="fab fa-facebook-messenger"></i></a>
                 </li>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <input type="hidden" name="postId" value="<%= userId._id %>">
                 <li class="nav-item dropdown mr-1">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-cog"></i>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="/edit-profile"><h6>Edit profil</h6></a>
+                        <a class="dropdown-item" href="/edit-profile/<%= userId._id %>"><h6>Edit profil</h6></a>
                         <a class="dropdown-item" href="/reset-password"><h6>Edit password</h6></a>
                         <a class="dropdown-item" href="/change-data"><h6>Edit e-mail and name</h6></a>
                     </div>
