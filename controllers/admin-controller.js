@@ -1,3 +1,5 @@
+const fileHelper = require('../util/file');
+
 const Post = require("../models/posts");
 
 exports.getAllPosts = (req, res, next) => {
@@ -20,7 +22,8 @@ exports.getAllPosts = (req, res, next) => {
 exports.getDeletePost = (req, res, next) => {
   const postId = req.params.postId;
   res.render('admin/all-posts', {
-    pageTitle: 'All your posts'
+    pageTitle: 'All your posts',
+    userId: req.user
   })
 }
 
@@ -28,6 +31,7 @@ exports.postDeletePost = (req, res, next) => {
   const postId = req.params.postId;
   Post.findById(postId)
     .then(post => {
+      fileHelper.deleteFile(post.imageUrl);
       return Post.deleteOne({ _id: postId, 'user.userId': req.user._id })
     })
     .then(() => {
@@ -59,13 +63,17 @@ exports.postEditPost = (req, res, next) => {
   const updatedDescription = req.body.description;
   Post.findById(postId)
     .then(post => {
+      // if (post.user.userId.toString() !== req.user._id.toString()) {
+      //   return res.redirect('/');
+      // }
       post.description = updatedDescription;
       if(image) {
-        post.imageUrl = image.path
+        fileHelper.deleteFile(post.imageUrl);
+        post.imageUrl = image.path;
       }
       return post.save()
         .then(result => {
-          console.log('Post is updated');
+          console.log('Post is updated!');
           res.redirect(`/all-posts/${req.user._id}`);
         })
         .catch(err => {
