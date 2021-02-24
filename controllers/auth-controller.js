@@ -7,6 +7,7 @@ const { validationResult } = require('express-validator');
 const sendgrid = require('@sendgrid/mail');
 
 const User = require('../models/users');
+const Post = require('../models/posts');
 
 exports.getSignup = (req, res, next) => {
   res.render('auth/signup', {
@@ -339,9 +340,17 @@ exports.postEditProfile = (req, res, next) => {
 ////////////////////////////////////////////////////
 
 exports.getViewProfile = (req, res, next) => {
-  // const userId = req.params.userId;
-  res.render('feed/view-profile', {
-    pageTitle: 'Profile',
-    userId: req.user
-  })
+  const userId = req.params.userId;
+  User.findById(userId)
+    .then(user => {
+      Post.find({ 'user.userId': userId })
+        .then(posts => {
+          res.render('feed/view-profile', {
+            pageTitle: 'Profile',
+            userId: req.user,
+            user: user,
+            posts: posts
+          })
+        })
+    })
 }
