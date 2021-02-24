@@ -336,3 +336,12 @@ exports.postEditProfile = (req, res, next) => {
     });
 }
 
+////////////////////////////////////////////////////
+
+exports.getViewProfile = (req, res, next) => {
+  // const userId = req.params.userId;
+  res.render('feed/view-profile', {
+    pageTitle: 'Profile',
+    userId: req.user
+  })
+}
