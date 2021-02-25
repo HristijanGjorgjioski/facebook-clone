@@ -26,29 +26,32 @@ exports.getViewProfile = (req, res, next) => {
 
 exports.postAddFriend = (req, res, next) => {
   const user = req.user;
-  const friendId = req.params.friendId;
+  const friendId = req.body.userId;
 
-  const friend = User.findById(friendId);
-  const update = {
-    friends: {
-      friendId: friend._id,
-      list: [
-        {
-          friendId: friend._id,
-          friendName: friend.name,
-          friendEmail: friend.email
+  User.findById(friendId)
+    .then(friend => {
+      const update = {
+        friends: {
+          list: [
+            {
+              friendId: friendId,
+              friendName: friend.name,
+              friendEmail: friend.email
+            }
+          ]
         }
-      ]
-    }
-  };
+      };
 
-  User.findOneAndUpdate({ '_id': user._id }, update)
-    .then(updatedUser => {
-      console.log('Friend added!');
-      res.redirect('/');
-      // res.redirect(`view-profile/${friendId}`);
+      User.findOneAndUpdate({ '_id': user._id }, update)
+        .then(updatedUser => {
+          console.log('Friend added!');
+          res.redirect('/');
+        })
+        .catch(err => {
+          console.log(err);
+        }) 
     })
     .catch(err => {
       console.log(err);
-    })  
+    })
 }

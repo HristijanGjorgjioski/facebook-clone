@@ -10,7 +10,6 @@ const userSchema = new Schema({
     type: String
   },
   friends: {
-    Id: String,
     list: [
       {
         friendId: String,
