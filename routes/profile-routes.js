@@ -3,7 +3,10 @@ const { check, body } = require('express-validator');
 
 const router = express.Router();
 
-const postController = require('../controllers/post-controller');
+const profileController = require('../controllers/profile-controller');
 
+router.get('/view-profile/:friendId', profileController.getViewProfile);
+
+router.post('/add-friend', profileController.postAddFriend);
 
 module.exports = router;

@@ -9,6 +9,17 @@ const userSchema = new Schema({
   profilePhoto: {
     type: String
   },
+  friends: {
+    friend: [
+      {
+        friendDetails: {
+          friendId: String,
+          friendName: String,
+          friendEmail: String
+        }
+      }
+    ]
+  },
   email: {
     type: String,
     required: true

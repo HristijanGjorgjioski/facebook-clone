@@ -338,19 +338,3 @@ exports.postEditProfile = (req, res, next) => {
 }
 
 ////////////////////////////////////////////////////
-
-exports.getViewProfile = (req, res, next) => {
-  const userId = req.params.userId;
-  User.findById(userId)
-    .then(user => {
-      Post.find({ 'user.userId': userId })
-        .then(posts => {
-          res.render('feed/view-profile', {
-            pageTitle: 'Profile',
-            userId: req.user,
-            user: user,
-            posts: posts
-          })
-        })
-    })
-}

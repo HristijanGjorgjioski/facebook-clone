@@ -78,6 +78,5 @@ router.post('/edit-profile', authController.postEditProfile);
 
 ////////////////////////////////////////////
 
-router.get('/view-profile/:userId', authController.getViewProfile);
 
 module.exports = router;

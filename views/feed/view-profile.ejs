@@ -9,9 +9,10 @@
                 <div class="px-4 pt-0 pb-4 bg-dark">
                     <div class="media align-items-end profile-header">
                         <div class="profile mr-3">
-                            <img src="/<%= user.profilePhoto %>" alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                            <img src="/<%= user.profilePhoto %>" alt="..." width="130" class="rounded mb-1 img-thumbnail">
                             <form action="/add-friend" method="POST">
-                                <a href="#" class="btn btn-dark btn-sm btn-block">Add friend</a>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
                             </form>
                         </div>
                         <div class="media-body mb-5 text-white">
