@@ -10,13 +10,12 @@ const userSchema = new Schema({
     type: String
   },
   friends: {
-    friend: [
+    Id: String,
+    list: [
       {
-        friendDetails: {
-          friendId: String,
-          friendName: String,
-          friendEmail: String
-        }
+        friendId: String,
+        friendName: String,
+        friendEmail: String
       }
     ]
   },

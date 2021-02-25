@@ -31,7 +31,8 @@ exports.postAddFriend = (req, res, next) => {
   const friend = User.findById(friendId);
   const update = {
     friends: {
-      friend: [
+      friendId: friend._id,
+      list: [
         {
           friendId: friend._id,
           friendName: friend.name,
@@ -40,8 +41,6 @@ exports.postAddFriend = (req, res, next) => {
       ]
     }
   };
-
-  const update2 = { name: 'Apqala' };
 
   User.findOneAndUpdate({ '_id': user._id }, update)
     .then(updatedUser => {
