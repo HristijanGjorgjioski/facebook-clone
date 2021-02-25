@@ -10,7 +10,9 @@
                     <div class="media align-items-end profile-header">
                         <div class="profile mr-3">
                             <img src="/<%= user.profilePhoto %>" alt="..." width="130" class="rounded mb-2 img-thumbnail">
-                            <a href="#" class="btn btn-dark btn-sm btn-block">Add friend</a>
+                            <form action="/add-friend" method="POST">
+                                <a href="#" class="btn btn-dark btn-sm btn-block">Add friend</a>
+                            </form>
                         </div>
                         <div class="media-body mb-5 text-white">
                             <h4 class="mt-0 mb-0"><%= user.name %></h4>
@@ -21,7 +23,8 @@
                 <div class="bg-light p-4 d-flex justify-content-end text-center">
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <h5 class="font-weight-bold mb-0 d-block"><%= posts.length %></h5><small class="text-muted"> <i class="fa fa-picture-o mr-1"></i>Posts</small>
+                            <h5 class="font-weight-bold mb-0 d-block"><%= posts.length %></h5>
+                            <small class="text-muted"><i class="fa fa-picture-o mr-1"></i>Posts</small>
                         </li>
                         <li class="list-inline-item">
                             <h5 class="font-weight-bold mb-0 d-block">84K</h5>

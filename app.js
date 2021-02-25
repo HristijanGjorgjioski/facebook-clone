@@ -45,6 +45,7 @@ app.set('views', 'views');
 const adminRoutes = require('./routes/admin-routes');
 const authRoutes = require('./routes/auth-routes');
 const postRoutes = require('./routes/post-routes');
+const profileRoutes = require('./routes/profile-routes');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
@@ -88,6 +89,7 @@ app.use((req, res, next) => {
 app.use(adminRoutes);
 app.use(authRoutes);
 app.use(postRoutes);
+app.use(profileRoutes);
 
 mongoose.connect(
   MONGO_URI, 

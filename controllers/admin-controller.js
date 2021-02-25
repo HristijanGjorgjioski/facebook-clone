@@ -31,12 +31,17 @@ exports.postDeletePost = (req, res, next) => {
   const postId = req.params.postId;
   Post.findById(postId)
     .then(post => {
-      fileHelper.deleteFile(post.imageUrl);
+      if(post.imageUrl) {
+        fileHelper.deleteFile(post.imageUrl);
+      }
       return Post.deleteOne({ _id: postId, 'user.userId': req.user._id })
     })
     .then(() => {
-      console.log('Product deleted!');
+      console.log('Post deleted!');
       res.redirect(`/all-posts/${req.user._id}`);
+    })
+    .catch(err => {
+      console.log(err);
     })
 }
 
@@ -73,7 +78,7 @@ exports.postEditPost = (req, res, next) => {
       }
       return post.save()
         .then(result => {
-          console.log('Post is updated!');
+          console.log('Post updated!');
           res.redirect(`/all-posts/${req.user._id}`);
         })
         .catch(err => {
