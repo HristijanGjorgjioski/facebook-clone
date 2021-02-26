@@ -28,30 +28,59 @@ exports.postAddFriend = (req, res, next) => {
   const user = req.user;
   const friendId = req.body.userId;
 
-  User.findById(friendId)
-    .then(friend => {
-      const update = {
-        friends: {
-          list: [
-            {
-              friendId: friendId,
-              friendName: friend.name,
-              friendEmail: friend.email
-            }
-          ]
-        }
-      };
-
-      User.findOneAndUpdate({ '_id': user._id }, update)
-        .then(updatedUser => {
-          console.log('Friend added!');
+  User.findById(user._id)
+    .then(user => {
+      User.findById(friendId)
+        .then(friend => {
+          if(user._id.toString() === friendId.toString()) {
+            console.log('You can not do that!');
+            return res.redirect('/');
+          }
+           
+          return req.user.addFriend(friend);
+        })
+        .then(result => {
+          console.log('Friend added!')
           res.redirect('/');
         })
         .catch(err => {
           console.log(err);
-        }) 
+        })
     })
     .catch(err => {
       console.log(err);
     })
+
+  // User.findById(friendId)
+  //   .then(friend => {
+  //     const frd = [...User.friends.list];
+      // const update = {
+      //   friends: {
+      //     list: [
+      //       {
+      //         friendId: friendId,
+      //         friendName: friend.name,
+      //         friendEmail: friend.email
+      //       }
+      //     ]
+      //   }
+      // };
+    //   const updatedUser = frd.push({
+    //     friendId: friendId,
+    //     friendName: friend.name,
+    //     friendEmail: friend.email
+    //   });
+
+    //   User.findOneAndUpdate({ '_id': user._id }, updatedUser)
+    //     .then(updatedUser => {
+    //       console.log('Friend added!');
+    //       res.redirect('/');
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     })
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // })
 }

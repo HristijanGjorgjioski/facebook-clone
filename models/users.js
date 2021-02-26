@@ -30,4 +30,26 @@ const userSchema = new Schema({
   resetTokenExpiration: Date
 });
 
+userSchema.methods.addFriend = function(friend) {
+  const friendsListIndex = this.friends.list.findIndex(frd => {
+    return frd.friendId.toString() === friend._id.toString();
+  });
+  const updatedFriendsList = [...this.friends.list];
+  if(friendsListIndex >= 1) {
+    updatedFriendsList.push({})
+  } else {
+    updatedFriendsList.push({
+      friendId: friend._id,
+      friendName: friend.name,
+      friendEmail: friend.email
+    });
+  }
+
+  const updatedUser = {
+    list: updatedFriendsList
+  }
+  this.friends = updatedUser;
+  return this.save();
+}
+
 module.exports = mongoose.model('User', userSchema);
