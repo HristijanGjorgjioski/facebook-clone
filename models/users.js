@@ -32,11 +32,14 @@ const userSchema = new Schema({
 
 userSchema.methods.addFriend = function(friend) {
   const friendsListIndex = this.friends.list.findIndex(frd => {
+    console.log(frd.friendId.toString());
+    console.log(friend._id.toString());
     return frd.friendId.toString() === friend._id.toString();
   });
   const updatedFriendsList = [...this.friends.list];
-  if(friendsListIndex >= 1) {
-    updatedFriendsList.push({})
+  console.log(friendsListIndex);
+  if(!friendsListIndex) {
+    updatedFriendsList.push()
   } else {
     updatedFriendsList.push({
       friendId: friend._id,
@@ -44,6 +47,12 @@ userSchema.methods.addFriend = function(friend) {
       friendEmail: friend.email
     });
   }
+
+  // updatedFriendsList.push({
+  //   friendId: friend._id,
+  //   friendName: friend.name,
+  //   friendEmail: friend.email
+  // });
 
   const updatedUser = {
     list: updatedFriendsList
