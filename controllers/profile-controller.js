@@ -1,6 +1,5 @@
 const User = require('../models/users');
 const Post = require('../models/posts');
-const { findById } = require('../models/users');
 
 exports.getViewProfile = (req, res, next) => {
   const friendId = req.params.friendId;
@@ -8,11 +7,19 @@ exports.getViewProfile = (req, res, next) => {
     .then(user => {
       Post.find({ 'user.userId': friendId })
         .then(posts => {
+          let sameUser;
+          if(friendId.toString() === req.user._id.toString()) {
+            sameUser = true;
+          } else {
+            sameUser = false;
+          }
           res.render('feed/view-profile', {
             pageTitle: 'Profile',
             userId: req.user,
             user: user,
-            posts: posts
+            posts: posts,
+            errorMessage: null,
+            sameUser: sameUser
           })
         })
         .catch(err => {
@@ -32,11 +39,6 @@ exports.postAddFriend = (req, res, next) => {
     .then(user => {
       User.findById(friendId)
         .then(friend => {
-          if(user._id.toString() === friendId.toString()) {
-            console.log('You can not do that!');
-            return res.redirect('/');
-          }
-           
           return req.user.addFriend(friend);
         })
         .then(result => {

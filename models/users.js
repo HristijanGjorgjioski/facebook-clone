@@ -39,7 +39,7 @@ userSchema.methods.addFriend = function(friend) {
   const updatedFriendsList = [...this.friends.list];
   console.log(friendsListIndex);
   if(!friendsListIndex) {
-    updatedFriendsList.push()
+    updatedFriendsList.push();
   } else {
     updatedFriendsList.push({
       friendId: friend._id,
