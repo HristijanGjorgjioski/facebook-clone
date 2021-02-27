@@ -3,11 +3,19 @@ const Post = require('../models/posts');
 
 exports.getViewProfile = (req, res, next) => {
   const friendId = req.params.friendId;
+  const alredyFriend = User.find({ 'friends.list': friendId });
   User.findById(friendId)
-    .then(user => {
-      Post.find({ 'user.userId': friendId })
-        .then(posts => {
+  .then(user => {
+    Post.find({ 'user.userId': friendId })
+    .then(posts => {
           let sameUser;
+          let alreadyInFrdList;
+          console.log(alreadyInFrdList);
+          if(alredyFriend === undefined) {
+            alreadyInFrdList = true;
+          } else {
+            alreadyInFrdList = false;
+          }
           if(friendId.toString() === req.user._id.toString()) {
             sameUser = true;
           } else {
@@ -19,8 +27,10 @@ exports.getViewProfile = (req, res, next) => {
             user: user,
             posts: posts,
             errorMessage: null,
-            sameUser: sameUser
+            sameUser: sameUser,
+            alreadyInFrdList: alreadyInFrdList
           })
+          console.log(alreadyInFrdList);
         })
         .catch(err => {
           console.log(err);
@@ -52,37 +62,4 @@ exports.postAddFriend = (req, res, next) => {
     .catch(err => {
       console.log(err);
     })
-
-  // User.findById(friendId)
-  //   .then(friend => {
-  //     const frd = [...User.friends.list];
-      // const update = {
-      //   friends: {
-      //     list: [
-      //       {
-      //         friendId: friendId,
-      //         friendName: friend.name,
-      //         friendEmail: friend.email
-      //       }
-      //     ]
-      //   }
-      // };
-    //   const updatedUser = frd.push({
-    //     friendId: friendId,
-    //     friendName: friend.name,
-    //     friendEmail: friend.email
-    //   });
-
-    //   User.findOneAndUpdate({ '_id': user._id }, updatedUser)
-    //     .then(updatedUser => {
-    //       console.log('Friend added!');
-    //       res.redirect('/');
-    //     })
-    //     .catch(err => {
-    //       console.log(err);
-    //     })
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    // })
 }

@@ -20,7 +20,9 @@
                                 <input type="hidden" name="userId" value="<%= user._id %>">
                                 <% if(sameUser === true) { %>
                                     <div></div>
-                                <% } else { %>  
+                                <% } else if(alreadyInFrdList === true) { %>  
+                                    <div></div>
+                                <% } else { %>
                                     <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
                                 <% } %> 
                             </form>
