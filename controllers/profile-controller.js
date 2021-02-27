@@ -3,19 +3,16 @@ const Post = require('../models/posts');
 
 exports.getViewProfile = (req, res, next) => {
   const friendId = req.params.friendId;
-  const alredyFriend = User.find({ 'friends.list': friendId });
+  User.findById(req.user._id)
+    .then(user => {
+      console.log(user.friends.list[1].friendId);
+      console.log(user.friends.list.length);
+    })
   User.findById(friendId)
   .then(user => {
     Post.find({ 'user.userId': friendId })
     .then(posts => {
           let sameUser;
-          let alreadyInFrdList;
-          console.log(alreadyInFrdList);
-          if(alredyFriend === undefined) {
-            alreadyInFrdList = true;
-          } else {
-            alreadyInFrdList = false;
-          }
           if(friendId.toString() === req.user._id.toString()) {
             sameUser = true;
           } else {
@@ -27,10 +24,8 @@ exports.getViewProfile = (req, res, next) => {
             user: user,
             posts: posts,
             errorMessage: null,
-            sameUser: sameUser,
-            alreadyInFrdList: alreadyInFrdList
+            sameUser: sameUser
           })
-          console.log(alreadyInFrdList);
         })
         .catch(err => {
           console.log(err);
