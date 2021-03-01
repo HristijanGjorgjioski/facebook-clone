@@ -20,11 +20,9 @@
                                 <input type="hidden" name="friendId" value="<%= user._id %>">
                                 
                                 
-                                <% const friendsListIndex = userId.friends.list.findIndex(frd => { %>
-                                    <% console.log(frd); %> 
-                                    <% return frd.friendId.toString() === userId._id.toString(); %> 
+                                <% const friendsListIndex = userId.friends.list.findIndex(frd => { %> 
+                                    <% return frd.friendId.toString() === user._id.toString() %> 
                                 <% }) %> 
-                                <% console.log(friendsListIndex) %> 
                                 <% if(!friendsListIndex) { %> 
                                     <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
                                 <% } %>
