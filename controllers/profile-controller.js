@@ -3,11 +3,6 @@ const Post = require('../models/posts');
 
 exports.getViewProfile = (req, res, next) => {
   const friendId = req.params.friendId;
-  User.findById(req.user._id)
-    .then(user => {
-      console.log(user.friends.list[1].friendId);
-      console.log(user.friends.list.length);
-    })
   User.findById(friendId)
   .then(user => {
     Post.find({ 'user.userId': friendId })

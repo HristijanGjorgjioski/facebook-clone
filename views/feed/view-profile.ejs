@@ -20,16 +20,16 @@
                                 <input type="hidden" name="userId" value="<%= user._id %>">
                                 <% if(sameUser === true) { %>
                                     <div></div>
-                                <% } else { %>
-                                    <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
-                                <% } %> 
+                                <% } %>
+                                     
                                 <% if(userId.friends.list.length > 0) { %> 
-                                    <% for(let x of userId.friends.list) { %>
-                                        <% if(userId.friends.list === user._id) { %>
-                                            <h1>O MORE LJISICA</h1>
-                                        <% } %> 
-                                        <h4><%= user._id %></h4>
-                                    <% } %> 
+                                    <% userId.friends.list.findIndex(frd => { %>
+                                        <% if(frd.friendId.toString() === user._id.toString()) { %> 
+                                            <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
+                                        <% } else if(frd.friendId.toString() !== user._id.toString()) { %>
+                                            <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
+                                        <% } %>  
+                                    <% }) %> 
                                 <% } %> 
 
                             </form>
