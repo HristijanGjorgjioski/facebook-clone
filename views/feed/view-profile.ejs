@@ -17,20 +17,21 @@
                             <img src="/<%= user.profilePhoto %>" alt="..." width="130" class="rounded mb-1 img-thumbnail">
                             <form action="/add-friend" method="POST">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <input type="hidden" name="userId" value="<%= user._id %>">
-                                <% if(sameUser === true) { %>
-                                    <div></div>
+                                <input type="hidden" name="friendId" value="<%= user._id %>">
+                                
+                                
+                                <% const friendsListIndex = userId.friends.list.findIndex(frd => { %>
+                                    <% console.log(frd); %> 
+                                    <% return frd.friendId.toString() === userId._id.toString(); %> 
+                                <% }) %> 
+                                <% console.log(friendsListIndex) %> 
+                                <% if(!friendsListIndex) { %> 
+                                    <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
                                 <% } %>
-                                     
-                                <% if(userId.friends.list.length > 0) { %> 
-                                    <% userId.friends.list.findIndex(frd => { %>
-                                        <% if(frd.friendId.toString() === user._id.toString()) { %> 
-                                            <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
-                                        <% } else if(frd.friendId.toString() !== user._id.toString()) { %>
-                                            <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
-                                        <% } %>  
-                                    <% }) %> 
-                                <% } %> 
+                                <% if(friendsListIndex) { %>
+                                    <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
+                                <% } %>
+                                
 
                             </form>
                         </div>
@@ -47,7 +48,7 @@
                             <small class="text-muted"><i class="fa fa-picture-o mr-1"></i>Posts</small>
                         </li>
                         <li class="list-inline-item">
-                            <h5 class="font-weight-bold mb-0 d-block">84K</h5>
+                            <h5 class="font-weight-bold mb-0 d-block"><%= user.friends.list.length %> </h5>
                             <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Friends</small>
                         </li>
                     </ul>

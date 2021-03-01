@@ -12,7 +12,7 @@ const userSchema = new Schema({
   friends: {
     list: [
       {
-        friendId: String,
+        friendId: Schema.Types.ObjectId,
         friendName: String,
         friendEmail: String
       }

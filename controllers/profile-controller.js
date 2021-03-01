@@ -33,7 +33,7 @@ exports.getViewProfile = (req, res, next) => {
 
 exports.postAddFriend = (req, res, next) => {
   const user = req.user;
-  const friendId = req.body.userId;
+  const friendId = req.body.friendId;
 
   User.findById(user._id)
     .then(user => {
