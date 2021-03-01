@@ -9,4 +9,6 @@ router.get('/view-profile/:friendId', profileController.getViewProfile);
 
 router.post('/add-friend', profileController.postAddFriend);
 
+router.post('/delete-friend', profileController.postDeleteFriend);
+
 module.exports = router;

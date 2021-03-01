@@ -15,23 +15,30 @@
                     <div class="media align-items-end profile-header">
                         <div class="profile mr-3">
                             <img src="/<%= user.profilePhoto %>" alt="..." width="130" class="rounded mb-1 img-thumbnail">
-                            <form action="/add-friend" method="POST">
-                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <input type="hidden" name="friendId" value="<%= user._id %>">
-                                
-                                
-                                <% const friendsListIndex = userId.friends.list.findIndex(frd => { %> 
-                                    <% return frd.friendId.toString() === user._id.toString() %> 
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <input type="hidden" name="friendId" value="<%= user._id %>">
+                            
+                            
+                            <% const friendsListIndex = userId.friends.list.findIndex(frd => { %> 
+                                <% return frd.friendId.toString() === user._id.toString() %> 
                                 <% }) %> 
-                                <% if(!friendsListIndex) { %> 
-                                    <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
+                                <% if(!friendsListIndex) { %>
+                                    <form action="/delete-friend" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="friendId" value="<%= user._id %>">
+                                        <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
+                                    </form> 
                                 <% } %>
                                 <% if(friendsListIndex) { %>
-                                    <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
+                                    <form action="/add-friend" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="friendId" value="<%= user._id %>">
+                                        <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
+                                    </form>
                                 <% } %>
                                 
 
-                            </form>
+                            
                         </div>
                         <div class="media-body mb-5 text-white">
                             <h4 class="mt-0 mb-0"><%= user.name %></h4>

@@ -52,4 +52,15 @@ userSchema.methods.addFriend = function(friend) {
   return this.save();
 }
 
+userSchema.methods.deleteFriend = function(friend) {
+  const friendsListIndex = this.friends.list.indexOf(friend);
+  const updatedFriendsList = [...this.friends.list];
+  updatedFriendsList.splice(friendsListIndex);
+  const updatedUser = {
+    list: updatedFriendsList
+  }
+  this.friends = updatedUser;
+  return this.save();
+}
+
 module.exports = mongoose.model('User', userSchema);

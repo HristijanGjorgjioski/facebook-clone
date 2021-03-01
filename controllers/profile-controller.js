@@ -53,3 +53,28 @@ exports.postAddFriend = (req, res, next) => {
       console.log(err);
     })
 }
+
+exports.postDeleteFriend = (req, res, next) => {
+  const user = req.user;
+  const friendId = req.body.friendId;
+
+  User.findById(user._id)
+    .then(user => {
+      User.findById(friendId)
+      .then(friend => {
+        console.log(friend);
+        console.log(user.friends.list.indexOf(friend));
+        return req.user.deleteFriend(friend._id);
+      })
+      .then(result => {
+        console.log('Friend deleted!');
+        res.redirect('/');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
