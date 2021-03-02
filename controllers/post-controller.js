@@ -1,17 +1,24 @@
 const Post = require('../models/posts');
+const User = require('../models/users');
 const Comment = require('../models/comments');
 
 ////////////////////////////////////////
 
 exports.getPosts = (req, res, next) => {
+  const postUserId = req.body.postUserId;
+  console.log(req.body.postUserId + '  apala')
   return Post.find()
     .then(posts => {
-      // console.log(posts);
-      res.render('feed/wall', {
-        pageTitle: 'Feed',
-        posts: posts,
-        userId: req.user
-      })
+      User.findById(req.body.postUserId)
+        .then(postUser => {
+          console.log(postUser);
+          res.render('feed/wall', {
+            pageTitle: 'Feed',
+            posts: posts,
+            userId: req.user,
+            postUser: postUser
+          })
+        })
     })
     .catch(err => {
       console.log(err);
