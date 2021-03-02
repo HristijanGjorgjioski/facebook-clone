@@ -53,13 +53,10 @@ userSchema.methods.addFriend = function(friend) {
 }
 
 userSchema.methods.deleteFriend = function(friend) {
-  const friendsListIndex = this.friends.list.indexOf(friend);
-  const updatedFriendsList = [...this.friends.list];
-  updatedFriendsList.splice(friendsListIndex);
-  const updatedUser = {
-    list: updatedFriendsList
-  }
-  this.friends = updatedUser;
+  const updatedFriendsList = this.friends.list.filter(frd => {
+    return frd.friendId.toString() !== friend._id.toString();
+  })
+  this.friends.list = updatedFriendsList;
   return this.save();
 }
 

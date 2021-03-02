@@ -36,7 +36,11 @@
                                         <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
                                     </form>
                                 <% } %>
-                                
+                                <form action="/delete-friend" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" name="friendId" value="<%= user._id %>">
+                                    <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
+                                </form> 
 
                             
                         </div>

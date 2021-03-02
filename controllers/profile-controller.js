@@ -62,9 +62,7 @@ exports.postDeleteFriend = (req, res, next) => {
     .then(user => {
       User.findById(friendId)
       .then(friend => {
-        console.log(friend);
-        console.log(user.friends.list.indexOf(friend));
-        return req.user.deleteFriend(friend._id);
+        return req.user.deleteFriend(friend);
       })
       .then(result => {
         console.log('Friend deleted!');
