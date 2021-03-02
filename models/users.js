@@ -35,7 +35,7 @@ userSchema.methods.addFriend = function(friend) {
     return frd.friendId.toString() === friend._id.toString();
   });
   const updatedFriendsList = [...this.friends.list];
-  if(!friendsListIndex) {
+  if(friendsListIndex === -1) {
     updatedFriendsList.push();
   } else {
     updatedFriendsList.push({

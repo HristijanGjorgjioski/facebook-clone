@@ -14,38 +14,27 @@
                     <% } %> 
                     <div class="media align-items-end profile-header">
                         <div class="profile mr-3">
-                            <img src="/<%= user.profilePhoto %>" alt="..." width="130" class="rounded mb-1 img-thumbnail">
-                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                            <input type="hidden" name="friendId" value="<%= user._id %>">
+                            <img src="/<%= friend.profilePhoto %>" alt="..." width="130" class="rounded mb-1 img-thumbnail">
                             
                             
-                            <% const friendsListIndex = userId.friends.list.findIndex(frd => { %> 
-                                <% return frd.friendId.toString() === user._id.toString() %> 
-                                <% }) %> 
-                                <% if(!friendsListIndex) { %>
+                            
+                                <% if(alreadyFriend === true) { %>
                                     <form action="/delete-friend" method="POST">
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                        <input type="hidden" name="friendId" value="<%= user._id %>">
+                                        <input type="hidden" name="friendId" value="<%= friend._id %>">
                                         <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
                                     </form> 
                                 <% } %>
-                                <% if(friendsListIndex) { %>
+                                <% if(alreadyFriend === false) { %>
                                     <form action="/add-friend" method="POST">
                                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                        <input type="hidden" name="friendId" value="<%= user._id %>">
+                                        <input type="hidden" name="friendId" value="<%= friend._id %>">
                                         <button type="submit" class="btn btn-dark btn-sm btn-block">ADD FRIEND</button>
                                     </form>
                                 <% } %>
-                                <form action="/delete-friend" method="POST">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <input type="hidden" name="friendId" value="<%= user._id %>">
-                                    <button type="submit" class="btn btn-dark btn-sm btn-block">DELETE FRIEND</button>
-                                </form> 
-
-                            
                         </div>
                         <div class="media-body mb-5 text-white">
-                            <h4 class="mt-0 mb-0"><%= user.name %></h4>
+                            <h4 class="mt-0 mb-0"><%= friend.name %></h4>
                         </div>
                     </div>
                 </div>
@@ -57,7 +46,7 @@
                             <small class="text-muted"><i class="fa fa-picture-o mr-1"></i>Posts</small>
                         </li>
                         <li class="list-inline-item">
-                            <h5 class="font-weight-bold mb-0 d-block"><%= user.friends.list.length %> </h5>
+                            <h5 class="font-weight-bold mb-0 d-block"><%= friend.friends.list.length %> </h5>
                             <small class="text-muted"> <i class="fa fa-user-circle-o mr-1"></i>Friends</small>
                         </li>
                     </ul>

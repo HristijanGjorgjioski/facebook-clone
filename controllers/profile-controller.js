@@ -2,25 +2,41 @@ const User = require('../models/users');
 const Post = require('../models/posts');
 
 exports.getViewProfile = (req, res, next) => {
-  const friendId = req.params.friendId;
-  User.findById(friendId)
-  .then(user => {
-    Post.find({ 'user.userId': friendId })
+  User.findById(req.params.friendId)
+  .then(friend => {
+    Post.find({ 'user.userId': req.params.friendId })
     .then(posts => {
           let sameUser;
-          if(friendId.toString() === req.user._id.toString()) {
-            sameUser = true;
-          } else {
-            sameUser = false;
-          }
-          res.render('feed/view-profile', {
-            pageTitle: 'Profile',
-            userId: req.user,
-            user: user,
-            posts: posts,
-            errorMessage: null,
-            sameUser: sameUser
-          })
+          let alreadyFriend;
+          User.findById(req.user._id)
+            .then(user => {
+              const friendIndex = user.friends.list.filter(frd => {
+                return frd.friendId.toString() === req.params.friendId.toString()
+              })
+              if(friendIndex === undefined || friendIndex.length === 0) {
+                alreadyFriend = false;
+              } else {
+                alreadyFriend = true;
+              }
+
+              if(req.params.friendId.toString() === req.user._id.toString()) {
+                sameUser = true;
+              } else {
+                sameUser = false;
+              }
+              res.render('feed/view-profile', {
+                pageTitle: 'Profile',
+                userId: req.user,
+                friend: friend,
+                posts: posts,
+                errorMessage: null,
+                alreadyFriend: alreadyFriend,
+                sameUser: sameUser
+              })
+            })
+            .catch(err => {
+              console.log(err);
+            })
         })
         .catch(err => {
           console.log(err);
