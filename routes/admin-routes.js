@@ -14,4 +14,8 @@ router.get('/edit-post/:postId', adminController.getEditPost);
 
 router.post('/edit-post', adminController.postEditPost);
 
+router.get('/delete-account/:userId', adminController.getDeleteAccount);
+
+router.post('/delete-account', adminController.postDeleteAccount);
+
 module.exports = router;

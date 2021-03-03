@@ -1,6 +1,7 @@
 const fileHelper = require('../util/file');
 
 const Post = require("../models/posts");
+const User = require("../models/users");
 
 exports.getAllPosts = (req, res, next) => {
   const userId = req.user._id;
@@ -84,6 +85,37 @@ exports.postEditPost = (req, res, next) => {
         .catch(err => {
           console.log(err);
         })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
+/////////////////////////////////////////////////////////
+
+exports.getDeleteAccount = (req, res, next) => {
+  const userId = req.user._id;
+  Post.findById(userId)
+    .then(user => {
+      res.render('admin/delete-account', {
+        pageTitle: 'Delete account',
+        userId: req.user,
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}
+
+exports.postDeleteAccount = (req, res, next) => {
+  const userId = req.params.userId;
+
+  Post.find({ 'user.userId': userId })
+    .then(post => {
+      return Post.deleteMany({ 'user.userId': req.user._id })
+    })
+    .then(result => {
+      res.redirect('/');
     })
     .catch(err => {
       console.log(err);
