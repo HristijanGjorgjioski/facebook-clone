@@ -95,7 +95,7 @@ exports.postEditPost = (req, res, next) => {
 
 exports.getDeleteAccount = (req, res, next) => {
   const userId = req.user._id;
-  Post.findById(userId)
+  User.findById(userId)
     .then(user => {
       res.render('admin/delete-account', {
         pageTitle: 'Delete account',
@@ -112,10 +112,16 @@ exports.postDeleteAccount = (req, res, next) => {
 
   Post.find({ 'user.userId': userId })
     .then(post => {
+      if(post.imageUrl) {
+        fileHelper.deleteFile(post.imageUrl);
+      }
       return Post.deleteMany({ 'user.userId': req.user._id })
     })
+    .then(user => {
+      return User.deleteOne({ _id: req.user._id });
+    })
     .then(result => {
-      res.redirect('/');
+      res.redirect('/signup');
     })
     .catch(err => {
       console.log(err);
