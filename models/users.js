@@ -34,14 +34,14 @@ userSchema.methods.addFriend = function(friend) {
   const friendsListIndex = this.friends.list.findIndex(frd => {
     return frd.friendId.toString() === friend._id.toString();
   });
+  console.log(friend._id);
+  console.log(friendsListIndex);
   const updatedFriendsList = [...this.friends.list];
-  if(friendsListIndex === -1) {
+  if(friendsListIndex !== -1) {
     updatedFriendsList.push();
   } else {
     updatedFriendsList.push({
-      friendId: friend._id,
-      friendName: friend.name,
-      friendEmail: friend.email
+      friendId: friend._id
     });
   }
 

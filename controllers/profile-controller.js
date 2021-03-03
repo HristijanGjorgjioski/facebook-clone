@@ -55,6 +55,7 @@ exports.postAddFriend = (req, res, next) => {
     .then(user => {
       User.findById(friendId)
         .then(friend => {
+          console.log(friend);
           return req.user.addFriend(friend);
         })
         .then(result => {
