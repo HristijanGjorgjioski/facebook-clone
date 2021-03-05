@@ -14,7 +14,8 @@ const userSchema = new Schema({
       {
         friendId: Schema.Types.ObjectId,
         friendName: String,
-        friendEmail: String
+        friendEmail: String,
+        friendProfilePhoto: String
       }
     ]
   },
@@ -41,7 +42,10 @@ userSchema.methods.addFriend = function(friend) {
     updatedFriendsList.push();
   } else {
     updatedFriendsList.push({
-      friendId: friend._id
+      friendId: friend._id,
+      friendName: friend.name,
+      friendEmail: friend.email,
+      friendProfilePhoto: friend.profilePhoto
     });
   }
 

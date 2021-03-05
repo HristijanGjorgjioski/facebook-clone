@@ -18,4 +18,6 @@ router.get('/delete-account/:userId', adminController.getDeleteAccount);
 
 router.post('/delete-account', adminController.postDeleteAccount);
 
+router.get('/friends-list/:userId', adminController.getFriendList);
+
 module.exports = router;

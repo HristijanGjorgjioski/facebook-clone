@@ -127,3 +127,21 @@ exports.postDeleteAccount = (req, res, next) => {
       console.log(err);
     })
 }
+
+///////////////////////////////////////////////
+
+exports.getFriendList = (req, res, next) => {
+  const userId = req.params.userId;
+
+  User.findById(userId)
+    .then(user => {
+      res.render('admin/friends-list', {
+        pageTitle: 'Friends List',
+        user: user,
+        userId: userId
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    })
+}

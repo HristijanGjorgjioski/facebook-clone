@@ -3,12 +3,28 @@
 
 <%- include("../includes/navigation.ejs") %>
 
-    <div class="container bootstrap snippets bootdeys">
-        <div class="row">
-            <div class="col-xs-12 col-sm-9">
-                
-            </div>
-        </div>
-    </div>    
+    <% if(user.friends.list.length > 0) { %> 
+        <% for(let friend of user.friends.list) { %> 
+            <div class="container bootstrap snippets bootdeys">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-9">
+                        <div class="bg-white border mt-2">
+                            <div>
+                                <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                                    <div class="d-flex flex-row align-items-center feed-text px-2">
+                                    <img class="rounded-circle" src="/<%= friend.friendProfilePhoto %>" width="45">
+                                        <div class="d-flex flex-column flex-wrap ml-2">
+                                            <a href="/view-profile/<%= friend._id %>"><span class="font-weight-bold"><%= friend.friendName %></span></a>
+                                        </div>
+                                    </div>
+                                    <div class="feed-icon px-2"><i class="fa fa-ellipsis-v text-black-50"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        <% } %>    
+    <% } %> 
 
 <%- include("../includes/end.ejs") %> 
