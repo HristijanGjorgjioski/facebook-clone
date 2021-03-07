@@ -4,11 +4,12 @@ const { check, body } = require('express-validator');
 const router = express.Router();
 
 const profileController = require('../controllers/profile-controller');
+const isAuth = require('../middleware/is-auth');
 
-router.get('/view-profile/:friendId', profileController.getViewProfile);
+router.get('/view-profile/:friendId', isAuth, profileController.getViewProfile);
 
-router.post('/add-friend', profileController.postAddFriend);
+router.post('/add-friend', isAuth, profileController.postAddFriend);
 
-router.post('/delete-friend', profileController.postDeleteFriend);
+router.post('/delete-friend', isAuth, profileController.postDeleteFriend);
 
 module.exports = router;

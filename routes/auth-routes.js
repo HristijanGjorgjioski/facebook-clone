@@ -4,6 +4,7 @@ const { check, body } = require('express-validator');
 const router = express.Router();
 
 const authController = require('../controllers/auth-controller');
+const isAuth = require('../middleware/is-auth');
 
 router.get('/signup', authController.getSignup);
 
@@ -62,19 +63,19 @@ router.post(
 
 /////////////////////////
 
-router.get('/change-data', authController.getChangeData);
+router.get('/change-data', isAuth, authController.getChangeData);
 
-router.post('/change-data', authController.postChangeData);
+router.post('/change-data', isAuth, authController.postChangeData);
 
-router.get('/change-data/:token', authController.getNewData);
+router.get('/change-data/:token', isAuth, authController.getNewData);
 
-router.post('/new-data', authController.postNewData);
+router.post('/new-data', isAuth, authController.postNewData);
 
 /////////////////////////////
 
-router.get('/edit-profile/:userId', authController.getEditProfile);
+router.get('/edit-profile/:userId', isAuth, authController.getEditProfile);
 
-router.post('/edit-profile', authController.postEditProfile);
+router.post('/edit-profile', isAuth, authController.postEditProfile);
 
 ////////////////////////////////////////////
 
