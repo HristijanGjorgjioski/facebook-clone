@@ -13,7 +13,7 @@ const { v4: uuidv4 } = require('uuid');
 
 const User = require('./models/users');
 
-const MONGO_URI = 'mongodb+srv://fb-clone:12345@cluster0.u2uu1.mongodb.net/fb?retryWrites=true&w=majority';
+const MONGO_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.u2uu1.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
 
 const app = express();
 const store = new MongoDBStore({
@@ -97,7 +97,7 @@ mongoose.connect(
   {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}
 )
 .then(result => {
-  app.listen(3000, () => {
+  app.listen(process.env.PORT || 3000, () => {
     console.log("Server running on port 3000");
   });
 })
