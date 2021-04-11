@@ -1,5 +1,7 @@
 # facebook-clone
 
+![alt text](https://i.ibb.co/WnJvNjX/fb-clone.png)
+
 This application is my the most complex app that I have built on my own!
 This is not from any course or tutorial, i build everything by myself.
 I have work on this application maybe for 5-6 weeks. 
